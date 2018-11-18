@@ -4,6 +4,7 @@ from argparse import ArgumentParser
 import logging
 import os
 from flickrpub.db import Database
+from flickrpub.exif import Exif
 
 logging.basicConfig(format='%(levelname)s - %(message)s')
 logger = logging.getLogger('flickrpub')
@@ -24,10 +25,11 @@ def main():
         logger.setLevel(logging.DEBUG)
 
     with Database() as cursor:
-        res = cursor.execute("SELECT * FROM 'files'")
-        logger.debug(res)
+        res = cursor.execute("SELECT * FROM 'files'").fetchall()
 
     list_files(args.directory)
+    exif = Exif('test_fixtures/Bob Jones/doge.jpg').data
+    print(exif)
 
 
 def flickrapi_auth():
