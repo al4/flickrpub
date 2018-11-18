@@ -24,8 +24,8 @@ First obtain an API key and secret as per the [flickrapi documentation](https://
 Save these credentials in a file named credentials.ini in your current working directory:
 ```ini
 [flickrapi]
-api_key = 'xxx'
-secret = 'xxx'
+api_key = xxx
+secret = xxx
 ```
 
 Usage

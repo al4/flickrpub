@@ -7,5 +7,11 @@ setup(
     license='MIT',
     author='al4',
     author_email='',
-    description=''
+    description='',
+    entry_points={
+        'console_scripts':
+            [
+                'flickrpub = flickrpub.__main__:main'
+            ]
+    }
 )

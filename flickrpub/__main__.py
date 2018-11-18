@@ -7,7 +7,7 @@ logging.basicConfig(format='%(message)s')
 logger = logging.getLogger('flickrapi')
 
 
-if __name__ == "__main__":
+def main():
     credentials = configparser.ConfigParser()
     credentials.read('credentials.ini')
 
@@ -26,5 +26,8 @@ if __name__ == "__main__":
     )
 
     print(flickr)
-    flickr.authenticate_via_browser(perms='write')
+    flickr.authenticate_console(perms='write')
 
+
+if __name__ == "__main__":
+    main()
