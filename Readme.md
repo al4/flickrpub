@@ -25,7 +25,7 @@ Save these credentials in a file named credentials.ini in your current working d
 ```ini
 [flickrapi]
 api_key = 'xxx'
-api_secret = 'xxx'
+secret = 'xxx'
 ```
 
 Usage
