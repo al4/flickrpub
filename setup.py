@@ -3,7 +3,6 @@ from distutils.core import setup
 setup(
     name='flickrpub',
     version='0.0.1',
-    packages=[''],
     url='https://github.com/al4/flickrpub',
     license='MIT',
     author='al4',

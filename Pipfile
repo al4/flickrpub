@@ -7,6 +7,3 @@ verify_ssl = true
 
 [packages]
 flickrapi = '==2.4.0'
-
-[requires]
-python_version = "3.7"
