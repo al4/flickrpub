@@ -41,16 +41,17 @@ class Database(object):
 
     def _initialise(self):
         logger.info("Initialising sqlite database '{}'".format(self.sqlite_file))
-        self.conn.execute(""" CREATE TABLE flickrpub_schema (version INTEGER) """)
         self.conn.execute(""" CREATE TABLE files (id INTEGER PRIMARY KEY) """)
         self.conn.execute(""" ALTER TABLE files ADD COLUMN 'relative_path' TEXT """)
         self.conn.execute(""" CREATE UNIQUE INDEX files_relative_path ON files('relative_path') """)
-
         self.conn.execute(""" ALTER TABLE files ADD COLUMN 'md5' TEXT """)
         # SQLite has no bool type
         self.conn.execute(""" ALTER TABLE files ADD COLUMN 'uploaded' INTEGER """)
         self.conn.execute(""" ALTER TABLE files ADD COLUMN 'capture_time' INTEGER """)
-        self.conn.execute(""" INSERT INTO 'flickrpub_schema' ('version') VALUES (1) """)
+
+        # Set the schema version for DIY schema upgrades!
+        self.conn.execute(""" CREATE TABLE flickrpub_schema (version INTEGER) """)
+        self.conn.execute(""" INSERT INTO flickrpub_schema (version) VALUES (1) """)
         self.conn.commit()
 
     def version(self):
