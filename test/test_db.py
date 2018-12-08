@@ -3,7 +3,7 @@ import flickrpub.db
 
 
 logger = logging.getLogger('flickrpub')
-logger.setLevel(logging.DEBUG)
+# logger.setLevel(logging.DEBUG)
 
 
 class TestDatabase(object):
