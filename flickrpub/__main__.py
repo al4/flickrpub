@@ -1,12 +1,12 @@
 import flickrapi
 import configparser
-from argparse import ArgumentParser
 import logging
 import os
+from argparse import ArgumentParser
 from flickrpub.db import Database
 from flickrpub.exif import Exif
 
-logging.basicConfig(format='%(levelname)s - %(message)s')
+
 logger = logging.getLogger('flickrpub')
 logger.setLevel(logging.INFO)
 
@@ -18,14 +18,15 @@ def main():
     parser.add_argument('--collection', '-c', help='Flickr collection to use')
     parser.add_argument('--watch', '-w', action='store_true',
                         help='Watch the directory rather than upload once')
+    parser.add_argument('--sqlite-db', help='Path to SQLite database')
     parser.add_argument('directory', help='Directory upload from')
     args = parser.parse_args()
 
     if args.debug:
         logger.setLevel(logging.DEBUG)
 
-    with Database() as cursor:
-        res = cursor.execute("SELECT * FROM 'files'").fetchall()
+    with Database(args.sqlite_db) as db:
+        res = db.execute("SELECT * FROM 'files'").fetchall()
 
     list_files(args.directory)
     exif = Exif('test_fixtures/Bob Jones/doge.jpg').data

@@ -5,11 +5,6 @@ logger = logging.getLogger('flickrpub.exif')
 
 
 # http://www.exiv2.org/tags.html
-class Exif:
-    class Image:
-        DateTime = 306  # "creation time", or last modified
-        DateTimeOriginal = 36867  # fine for Canon
-
 
 class ExifReader(object):
     """ Extracting exif information from files """
@@ -39,4 +34,4 @@ class ExifReader(object):
 
     @property
     def original_datetime(self):
-        return self.exif_data[Exif.Image.DateTimeOriginal]
+        return self.exif_data[piexif.ExifIFD.DateTimeOriginal]

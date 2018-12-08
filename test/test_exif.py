@@ -20,4 +20,3 @@ class TestExifReader(object):
     def test_property_original_datetime(self):
         o = ExifReader(EXIF_IMG_PATH)
         assert o.original_datetime == b'2018:11:02 11:56:26'
-
