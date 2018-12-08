@@ -1,11 +1,10 @@
 import logging
 import sqlite3
 
-
-DB_FILE = 'flickrpub.sqlite'
-
 logger = logging.getLogger('flickrpub.db')
 SCHEMA_VERSION = 1
+
+DB_FILE = ':memory:'
 
 
 class Database(object):

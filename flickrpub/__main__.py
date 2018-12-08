@@ -1,24 +1,32 @@
 import flickrapi
 import configparser
+import fnmatch
 import logging
 import os
 from argparse import ArgumentParser
 from flickrpub.db import Database
-from flickrpub.exif import Exif
+from flickrpub.exif import ExifReader
 
 
 logger = logging.getLogger('flickrpub')
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
+
+IMAGE_GLOBS = (
+    '*.jpg',
+    '*.jpeg',
+    '*.JPG',
+    '*.JPEG',
+)
 
 
 def main():
-
     parser = ArgumentParser()
     parser.add_argument('--debug', action='store_true', help='Print debug log messages')
     parser.add_argument('--collection', '-c', help='Flickr collection to use')
     parser.add_argument('--watch', '-w', action='store_true',
                         help='Watch the directory rather than upload once')
-    parser.add_argument('--sqlite-db', help='Path to SQLite database')
+    parser.add_argument('--sqlite-db', default='flickrpub.sqlite',
+                        help='Path to SQLite database')
     parser.add_argument('directory', help='Directory upload from')
     args = parser.parse_args()
 
@@ -28,9 +36,8 @@ def main():
     with Database(args.sqlite_db) as db:
         res = db.execute("SELECT * FROM 'files'").fetchall()
 
-    list_files(args.directory)
-    exif = Exif('test_fixtures/Bob Jones/doge.jpg').data
-    print(exif)
+    li = list_files(args.directory)
+    logger.error(li)
 
 
 def flickrapi_auth():
@@ -47,14 +54,13 @@ def flickrapi_auth():
 
 def list_files(dir):
     """ List all files in a directory """
-    l = os.listdir(dir)
-    logger.debug(l)
-
-
-
-def upload_photo(private=True):
-    """ Upload a photo """
-
+    matches = []
+    for root, dirnames, filenames in os.walk(dir):
+        for glob in IMAGE_GLOBS:
+            matching = fnmatch.filter(filenames, glob)
+            for f in matching:
+                matches.append(os.path.join(root, f))
+    return matches
 
 
 if __name__ == "__main__":

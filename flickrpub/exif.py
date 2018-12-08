@@ -33,5 +33,5 @@ class ExifReader(object):
         return self._data['0th']
 
     @property
-    def original_datetime(self):
+    def datetime_original(self):
         return self.exif_data[piexif.ExifIFD.DateTimeOriginal]
